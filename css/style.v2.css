@@ -630,7 +630,16 @@ body::after{  content:none !important; }
   width:100%;
   max-width:100%;
 }
-.polaroids--3col .polaroid img{aspect-ratio:4/3; border-radius:5px;}
+/* 弹窗内极地图片：按原图比例完整展示，不裁剪（不强制 4:3） */
+.polaroids--3col .polaroid img{
+  aspect-ratio:auto;
+  width:100%;
+  height:auto;
+  max-height:65vh;
+  object-fit:contain;
+  background:#f5f6f8;
+  border-radius:5px;
+}
 .polaroids--3col .polaroid figcaption{
   margin-top:6px; font-size:.7rem;
 }
