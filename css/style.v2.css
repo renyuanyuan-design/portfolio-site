@@ -1299,6 +1299,13 @@ body::after{  content:none !important; }
 .campus-modal__body{padding-top:6px;}
 /* 弹窗内拍立得复用 .polaroids / .polaroid 同款视觉 */
 .campus-modal .polaroids{margin-top:6px;}
+/* 单图时强制居中（grid 默认左对齐会导致贴边） */
+.campus-modal .polaroids:has(.polaroid:only-child){
+  display:flex; justify-content:center; align-items:center;
+}
+.campus-modal .polaroids:has(.polaroid:only-child) .polaroid{
+  margin:0 auto;
+}
 /* 预留占位卡：虚线框 + 待补充提示（点击不触发灯箱） */
 .polaroid.polaroid--reserve{
   cursor:default;
@@ -1313,7 +1320,21 @@ body::after{  content:none !important; }
 }
 @media (max-width:640px){
   .campus-modal__panel{padding:24px 18px 20px;}
+  /* 移动端默认 2 列（2/3 张图时正常） */
   .campus-modal .polaroids--3col{grid-template-columns:repeat(2,1fr);}
+  /* 移动端 1 张图时强制单列 + 居中（避免被 2 列布局挤到左边） */
+  .campus-modal .polaroids--3col[style*="--pcount: 1"],
+  .campus-modal .polaroids--3col[style*="--pcount:1"]{
+    grid-template-columns:minmax(0, 280px);
+    justify-content:center;
+    margin:0 auto;
+  }
+  /* 移动端 3 张图时：3 个挤 2 列会断行，加 max-width 居中后让它优雅换行 */
+  .campus-modal .polaroids--3col[style*="--pcount: 3"],
+  .campus-modal .polaroids--3col[style*="--pcount:3"]{
+    max-width:480px;
+    margin:0 auto;
+  }
 }
 
 /* —— 技能卡牌 —— */
