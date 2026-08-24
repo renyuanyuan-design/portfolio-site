@@ -676,8 +676,11 @@ body::after{  content:none !important; }
 .polaroid.is-rotated45{
   overflow:hidden;
 }
+/* v80：百度实习 9 图 —— 缩略图统一横 4:3 封面，旋转角度保持不变 */
 .polaroid.is-rotated45 img{
-  width:100%; height:100%;
+  width:100%;
+  aspect-ratio:4/3;
+  height:auto;
   object-fit:cover;
   transform:rotate(90deg);
   transition:transform .35s var(--ease);
@@ -1709,7 +1712,24 @@ body::after{  content:none !important; }
 }
 
 /* ===== v80 修正：百度 4:3 + 校园弹窗不裁剪 + 移动端同步（直接追加，不影响上面任何代码） ===== */
-.polaroids--3col .polaroid img{aspect-ratio:4/3 !important; object-fit:cover !important;}
-.campus-modal .polaroids.polaroids--3col .polaroid img{aspect-ratio:auto !important; object-fit:contain !important; max-height:65vh !important;}
-.polaroids--3col[data-group="baidu"] .polaroid img{aspect-ratio:4/3 !important; object-fit:cover !important;}
-.campus-modal .polaroids:has(.polaroid:only-child){display:flex !important; justify-content:center !important; align-items:center !important;}
+/* 百度实习 9 图：缩略图统一横 4:3 封面填充（旋转角度由本体规则保留，此处不动 transform） */
+.polaroids--3col[data-group="baidu"] .polaroid:not(.is-rotated45) img{
+  aspect-ratio:4/3 !important;
+  object-fit:cover !important;
+}
+/* is-rotated45 那张的旋转角度已在 .polaroid.is-rotated45 img 本体规则中保留，这里仅加固 4:3 框 */
+.polaroids--3col[data-group="baidu"] .polaroid.is-rotated45 img{
+  aspect-ratio:4/3 !important;
+  object-fit:cover !important;
+}
+/* 校园弹窗：原比例完整展示、不旋转、不裁剪 */
+.campus-modal .polaroids.polaroids--3col .polaroid img{
+  aspect-ratio:auto !important;
+  object-fit:contain !important;
+  transform:none !important;
+  max-height:65vh !important;
+}
+/* 单图居中 */
+.campus-modal .polaroids:has(.polaroid:only-child){
+  display:flex !important; justify-content:center !important; align-items:center !important;
+}
