@@ -1707,3 +1707,9 @@ body::after{  content:none !important; }
   .contact__actions{gap:10px;}
   .contact-btn{padding:11px 18px; font-size:.88rem;}
 }
+
+/* ===== v80 修正：百度 4:3 + 校园弹窗不裁剪 + 移动端同步（直接追加，不影响上面任何代码） ===== */
+.polaroids--3col .polaroid img{aspect-ratio:4/3 !important; object-fit:cover !important;}
+.campus-modal .polaroids.polaroids--3col .polaroid img{aspect-ratio:auto !important; object-fit:contain !important; max-height:65vh !important;}
+.polaroids--3col[data-group="baidu"] .polaroid img{aspect-ratio:4/3 !important; object-fit:cover !important;}
+.campus-modal .polaroids:has(.polaroid:only-child){display:flex !important; justify-content:center !important; align-items:center !important;}
